@@ -5,7 +5,14 @@
     ViewData["PageActionText"] = "+ New Transaction";
     ViewData["PageActionUrl"] = "/Transaction/AddOrEdit";
 }
-
+<div class="row">
+    <div class="col-md-4">
+        @using (Html.BeginForm("GenerarPdf", "Transaction", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <input type="submit" class="btn btn-outline-light" value="PDF"></input>
+        }
+    </div>
+</div>
 <div class="row">
     <div class="col-md-12">
         <form asp-controller="Transaction" asp-action="Index" method="post">
