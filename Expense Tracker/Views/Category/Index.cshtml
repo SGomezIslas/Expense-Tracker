@@ -15,8 +15,9 @@
             <e-grid-columns>
                 <e-grid-column headerText="Category" field="TitleWithIcon"></e-grid-column>
                 <e-grid-column headerText="Type" template="#typeColumnTemplate" width="150px"></e-grid-column>
+                <e-grid-column headerText="Color" template="#colorColumnTemplate" width="100px"></e-grid-column>
                 <e-grid-column headerText="Actions" template="#actionColumnTemplate" width="100px"></e-grid-column>
-                <e-grid-column headerText="Color" template="color" width="100px"></e-grid-column>
+                
             </e-grid-columns>
         </ejs-grid>
     </div>
@@ -34,6 +35,10 @@
         <span class="badge bg-danger">${Type}</span>
     ${/if}
 </script>
+
+<script id="colorColumnTemplate" type="text/x-template">
+    <input type="color" class="form-control form-control-color" id="exampleColorInput" value="${Color}" readonly>
+</script> 
 
 <script id="actionColumnTemplate" type="text/x-template">
     <div class="d-flex flex-row justify-content-start">

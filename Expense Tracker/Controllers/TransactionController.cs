@@ -19,10 +19,32 @@ namespace Expense_Tracker.Controllers
         }
 
         // GET: Transaction
-        public async Task<IActionResult> Index()
+        //public async Task<IActionResult> Index()
+        //{
+        //    var applicationDbContext = _context.Transactions.Include(t => t.Category);
+        //    return View(await applicationDbContext.ToListAsync());
+        //}
+
+        public async Task<IActionResult> Index(string? categoria, DateTime? date)
         {
+            var categories = await _context.Categories.ToListAsync();
+            ViewBag.Categories = new SelectList(categories, "Title", "Title");
+
             var applicationDbContext = _context.Transactions.Include(t => t.Category);
-            return View(await applicationDbContext.ToListAsync());
+            if (categoria != null)
+            {
+                var applicationDbContextCategoria = _context.Transactions.Include(t => t.Category).Where(t => t.Category.Title == categoria);
+                return View(await applicationDbContextCategoria.ToListAsync());
+            }
+            if (date != null)
+            {
+                var applicationDbContextDate = _context.Transactions.Include(t => t.Category).Where(t => t.Date == date);
+                return View(await applicationDbContextDate.ToListAsync());
+            }
+            else
+            {
+                return View(await applicationDbContext.ToListAsync());
+            }
         }
 
         public IActionResult AddOrEdit(int id = 0)
