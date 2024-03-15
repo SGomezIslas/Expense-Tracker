@@ -146,5 +146,96 @@ namespace Expense_Tracker.Controllers
                 FileDownloadName = "Estado.pdf"
             };
         }
+        public ActionResult PdfIngresos()
+        {
+            var applicationDbContext = _context.Transactions.Include(t => t.Category)
+                .Where(t => t.Category.Type == "Income").ToList();
+
+            string rutaTempPdf = Path.GetTempFileName() + ".pdf";
+
+            using (PdfDocument pdfDocument = new PdfDocument(new PdfWriter(rutaTempPdf)))
+            {
+                using (Document document = new Document(pdfDocument))
+                {
+                    document.Add(new Paragraph("Resumen de Ingresos"));
+
+                    Table table = new Table(3);
+                    table.SetWidth(UnitValue.CreatePercentValue(100));
+
+                    table.AddHeaderCell("Categoria");
+                    table.AddHeaderCell("Monto");
+                    table.AddHeaderCell("Fecha");
+
+                    foreach (Models.Transaction trans in applicationDbContext)
+                    {
+                        table.AddCell(trans.Category.Title);
+                        table.AddCell(trans.Amount.ToString());
+                        table.AddCell(trans.Date.ToString());
+                        
+
+                    }
+
+                    document.Add(table);
+                }
+            }
+
+            // Leer el archivo PDF como un arreglo de bytes
+            byte[] fileBytes = System.IO.File.ReadAllBytes(rutaTempPdf);
+
+            // Eliminar el archivo temporal
+            System.IO.File.Delete(rutaTempPdf);
+
+            // Descargar el archivo PDF
+            return new FileStreamResult(new MemoryStream(fileBytes), "application/pdf")
+            {
+                FileDownloadName = "IngresosTransactions.pdf"
+            };
+        }
+        public ActionResult PdfEgresos()
+        {
+            var applicationDbContext = _context.Transactions.Include(t => t.Category)
+                .Where(t => t.Category.Type == "Expense").ToList();
+
+            string rutaTempPdf = Path.GetTempFileName() + ".pdf";
+
+            using (PdfDocument pdfDocument = new PdfDocument(new PdfWriter(rutaTempPdf)))
+            {
+                using (Document document = new Document(pdfDocument))
+                {
+                    document.Add(new Paragraph("Resumen de Egresos"));
+
+                    Table table = new Table(3);
+                    table.SetWidth(UnitValue.CreatePercentValue(100));
+
+                    table.AddHeaderCell("Categoia");
+                    table.AddHeaderCell("monto");
+                    table.AddHeaderCell("fecha");
+
+                    foreach (Models.Transaction trans in applicationDbContext)
+                    {
+                        table.AddCell(trans.Category.Title);
+                        table.AddCell(trans.Amount.ToString());
+                        table.AddCell(trans.Date.ToString());
+                        
+
+                    }
+
+                    document.Add(table);
+                }
+            }
+
+            // Leer el archivo PDF como un arreglo de bytes
+            byte[] fileBytes = System.IO.File.ReadAllBytes(rutaTempPdf);
+
+            // Eliminar el archivo temporal
+            System.IO.File.Delete(rutaTempPdf);
+
+            // Descargar el archivo PDF
+            return new FileStreamResult(new MemoryStream(fileBytes), "application/pdf")
+            {
+                FileDownloadName = "EgresosTransactions.pdf"
+            };
+        }
+
     }
 }

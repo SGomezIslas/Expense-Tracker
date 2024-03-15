@@ -7,10 +7,24 @@
 }
 <div class="row">
     <div class="col-md-4">
+        <div class="col-md-4">
         @using (Html.BeginForm("GenerarPdf", "Transaction", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
-            <input type="submit" class="btn btn-outline-light" value="PDF"></input>
+            <input type="submit" class="btn btn-outline-light" value="Pdf general"></input>
         }
+        </div>
+        <div class="col-md-4">
+            @using (Html.BeginForm("PdfEgresos", "Transaction", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <input type="submit" class="btn btn-outline-light" value="PDF de egresos"></input>
+            }
+        </div>
+        <div class="col-md-4">
+            @using (Html.BeginForm("PdfIngresos", "Transaction", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <input type="submit" class="btn btn-outline-light" value="PDF de ingresos"></input>
+            }
+        </div>
     </div>
 </div>
 <div class="row">
@@ -45,7 +59,7 @@
             <e-grid-columns>
                 <e-grid-column headerText="Category" field="CategoryTitleWithIcon"></e-grid-column>
                 <e-grid-column headerText="Date" field="Date" width="110px"
-                    type="date" format="MMM-dd-yy" textAlign="Left"></e-grid-column>
+                               type="date" format="MMM-dd-yy" textAlign="Left"></e-grid-column>
                 <e-grid-column headerText="Amount" field="FormattedAmount" textAlign="Right" width="110px"></e-grid-column>
                 <e-grid-column headerText="Actions" template="#actionColumnTemplate" width="100px"></e-grid-column>
             </e-grid-columns>
@@ -64,7 +78,7 @@
             <i class="fa-solid fa-pen fa-lg"></i>
         </a>
         <form action="/Transaction/Delete/${TransactionId}" method="post">
-            @Html.AntiForgeryToken()
+    @Html.AntiForgeryToken()
             <button type="submit" class="btn btn-sm btn-link no-a-decoration"
             onclick="return confirm(&quot;Are sure to delete this record?&quot;)">
                 <i class="fa-solid fa-trash-can fa-lg text-danger"></i>
