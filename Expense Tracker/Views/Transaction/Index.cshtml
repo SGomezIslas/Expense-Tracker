@@ -8,10 +8,10 @@
 <div class="row">
     <div class="col-md-4">
         <div class="col-md-4">
-        @using (Html.BeginForm("GenerarPdf", "Transaction", FormMethod.Post, new { enctype = "multipart/form-data" }))
-        {
-            <input type="submit" class="btn btn-outline-light" value="Pdf general"></input>
-        }
+            @using (Html.BeginForm("GenerarPdf", "Transaction", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <input type="submit" class="btn btn-outline-light" value="Pdf general"></input>
+            }
         </div>
         <div class="col-md-4">
             @using (Html.BeginForm("PdfEgresos", "Transaction", FormMethod.Post, new { enctype = "multipart/form-data" }))

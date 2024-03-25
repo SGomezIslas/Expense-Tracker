@@ -70,6 +70,9 @@ namespace Expense_Tracker.Controllers
                     _context.Add(transaction);
                 else
                     _context.Update(transaction);
+
+                transaction.Date = DateTime.Now;
+
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
